@@ -1,12 +1,11 @@
 import uuid
 import os
-import time
 import telebot
 from dotenv import load_dotenv
+from ai_module import get_audio_start, get_audio_end, get_text_emo, get_audio_emo, model
 
 load_dotenv()
 
-# TOKEN = "8020326078:AAHoUbM5KNw6I_GDQtwyZctvcwqzZiw_O-c"
 TOKEN = os.getenv("TOKEN")
 bot = telebot.TeleBot(TOKEN)
 
@@ -34,8 +33,14 @@ def getfile(message):
 
 
 def processfile(file_name):
-    time.sleep(10)
-    return "wait"
+    trascribe = model.transcribe(f"storage/{file_name}")['text']
+    # print(trascribe)
+    text_res = get_text_emo(trascribe)
+    audio_res = get_audio_emo(f"storage/{file_name}")
+
+    response = f"Эмоция по тексту: {text_res}\nЭмоция по аудио: {audio_res}\nТранскрибация: {trascribe}"
+
+    return response
 
 
 if __name__ == "__main__":

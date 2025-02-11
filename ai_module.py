@@ -33,17 +33,17 @@ def get_audio_end(filename):
     end.write_audiofile('end.mp3')
 
 
+
 def get_text_emo(text):
-    true_text = text['text']
-    print(true_text)
-    task = f"Сейчас я отправлю тебе разговор между двумя людьми. {true_text}. Проанализируй его и назови эмоцию, которую испытывают его участники одним словом, например: веселье, злость, грусть. В ответ отправь только слово, описывающее эмоцию разговора"
+    # true_text = text['text']
+    task = f"Сейчас я отправлю тебе разговор между двумя людьми. {text}. Проанализируй его и назови эмоцию, которую испытывают его участники одним словом, например: веселье, злость, грусть. В ответ отправь только слово, описывающее эмоцию разговора"
     messages = [HumanMessage(content=task)]
     response = model_giga.invoke(messages)
     return response.content
 
 
 def get_audio_emo(filepath) -> str:
-    emotion2prob: Dict[str, int] = model.get_probs(filepath)
+    emotion2prob: Dict[str, int] = model_gigaam.get_probs(filepath)
     return sorted(list(emotion2prob.items()), key=lambda x: x[1], reverse=True)[0][0]
 
 # print(mood(start_result))
