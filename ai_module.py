@@ -17,7 +17,8 @@ model_giga = GigaChat(
     model=os.getenv('MODEL'),
     verify_ssl_certs=False
 )
-model_gigaam = gigaam.load_model('emo')
+model_emo = gigaam.load_model('emo')
+# model_ctc = gigaam.load_model('ctc')
 
 
 def get_audio_start(filename):
@@ -33,17 +34,16 @@ def get_audio_end(filename):
     end.write_audiofile('end.mp3')
 
 
-
 def get_text_emo(text):
     # true_text = text['text']
-    task = f"Сейчас я отправлю тебе разговор между двумя людьми. {text}. Проанализируй его и назови эмоцию, которую испытывают его участники одним словом, например: веселье, злость, грусть. В ответ отправь только слово, описывающее эмоцию разговора"
+    task = f"Сейчас я отправлю тебе разговор между двумя людьми. {text}. Проанализируй его и назови эмоцию, которую испытывают его участники одним словом из этих слов: радость, злость, грусть. В ответ отправь только слово, описывающее эмоцию разговора"
     messages = [HumanMessage(content=task)]
     response = model_giga.invoke(messages)
     return response.content
 
 
 def get_audio_emo(filepath) -> str:
-    emotion2prob: Dict[str, int] = model_gigaam.get_probs(filepath)
+    emotion2prob: Dict[str, int] = model_emo.get_probs(filepath)
     return sorted(list(emotion2prob.items()), key=lambda x: x[1], reverse=True)[0][0]
 
 # print(mood(start_result))
@@ -52,3 +52,10 @@ def get_audio_emo(filepath) -> str:
 # end_result = model.transcribe("end.mp3")
 
 # print(start_result)
+
+if __name__ == "__main__":
+    from pprint import pprint
+    
+    # pprint(model.transcribe("storage/call.wav"))
+
+    print(get_audio_emo("storage/call.wav"))

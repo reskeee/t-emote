@@ -12,7 +12,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=["start"])
 def hello(message):
-    bot.reply_to(message, "Hello")
+    bot.reply_to(message, "Привет, я бот-определиттель эмоций. Отправь мне аудиофайл и я скажу, какие эмоции испытывает говорящий человек")
 
 
 @bot.message_handler(content_types=["audio", 'document'])
@@ -38,10 +38,14 @@ def processfile(file_name):
     text_res = get_text_emo(trascribe)
     audio_res = get_audio_emo(f"storage/{file_name}")
 
-    response = f"Эмоция по тексту: {text_res}\nЭмоция по аудио: {audio_res}\nТранскрибация: {trascribe}"
+    response = f"Эмоция по тексту: {text_res}\nЭмоция по аудио: {audio_res}"
+
+    print(trascribe)
 
     return response
 
 
 if __name__ == "__main__":
-    bot.infinity_polling()
+    # bot.infinity_polling()
+
+    processfile("storage/call.mp3")

@@ -7,6 +7,10 @@ def convert_to_wav(input_file, output_file):
     print(f"Файл успешно преобразован в WAV: {output_file}")
 
 if __name__ == "__main__":
-    input_path = "call.mp3"
-    output_path = "call.wav"
+    input_path = "storage/start.mp3"
+    output_path = "storage/start.wav"
+    convert_to_wav(input_path, output_path)
+
+    input_path = "storage/end.mp3"
+    output_path = "storage/end.wav"
     convert_to_wav(input_path, output_path)

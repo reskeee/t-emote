@@ -15,7 +15,7 @@ ffmpeg==1.4
 filelock==3.17.0
 flatbuffers==25.1.24
 fsspec==2025.2.0
--e git+https://github.com/salute-developers/GigaAM@42436bfb68ae62061bd19cdefe7e062329ca3b84#egg=gigaam&subdirectory=../../GigaAM
+-e ./GigaAM
 gigachat==0.1.38
 h11==0.14.0
 httpcore==1.0.7
